@@ -5,7 +5,7 @@ import Comment from 'App/Models/Comment'
 
 
 export default class PostsController {
-    public async index({view}){
+    public async index(){
        const upUser= await Post.query()
        .preload("reacts")
        .preload("comments",(replyQ)=>{
@@ -14,7 +14,7 @@ export default class PostsController {
        return upUser
     }
 
-    public async store({response,request}){
+    public async store({request}){
         const payload= await request.all()
         await Post.create({
             user_id:payload.user_id,
@@ -22,13 +22,13 @@ export default class PostsController {
             disabled:payload.disabled
         })
     }
-    public async update({request,response,params}){
+    public async update({request,params}){
         const payload = await request.all()
         await Post.query().where('id',params.id).update({
             post_desc:payload.post_desc
         })
     }
-    public async delete({request,params}){
+    public async delete({params}){
         const post = await Post.findOrFail(params.id)
         await post.delete()
     }

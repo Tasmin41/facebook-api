@@ -28,7 +28,7 @@ Route.get('/', async () => {
 Route.get('/posts', 'PostsController.index')
 Route.post("/posts","PostsController.store")
 Route.post("/posts/:id","PostsController.update")
-Route.delete("/posts/:id","PostsController.delete")
+Route.post("/postsDelete/:id","PostsController.delete")
 
 /*react routes*/
 
@@ -42,7 +42,21 @@ Route.post("/comments","CommentsController.store")
 /*Replies routes*/
 Route.post("/replies","RepliesController.store")
 
+//user routes
+Route.get('/users', 'UsersController.index')
+Route.post("/users","UsersController.store")
+Route.patch("/users/:id","UsersController.show")
+
+Route.post('/login', async ({ auth, request,response }) => {
+  const payload = request.all()
+
+  const email = payload.email
+  const password = payload.password
+
+   return await auth.use('api').attempt(email, password)
+
+
+})
 
 
 
-// Route.resource('tests','Postscontroller').apiOnly()
