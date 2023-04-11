@@ -19,10 +19,12 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import UsersController from 'App/Controllers/Http/UsersController'
 
 Route.get('/', async () => {
   return { hello: 'world' }
 })
+
 
 /*Post routes*/
 Route.get('/posts', 'PostsController.index')
@@ -42,21 +44,14 @@ Route.post("/comments","CommentsController.store")
 /*Replies routes*/
 Route.post("/replies","RepliesController.store")
 
+
+
 //user routes
 Route.get('/users', 'UsersController.index')
 Route.post("/users","UsersController.store")
 Route.patch("/users/:id","UsersController.show")
 
-Route.post('/login', async ({ auth, request,response }) => {
-  const payload = request.all()
-
-  const email = payload.email
-  const password = payload.password
-
-   return await auth.use('api').attempt(email, password)
-
-
-})
-
+//login routes
+Route.post('/login',"LoginController.store")
 
 
